@@ -268,4 +268,34 @@ $ git push -u <remote-reference> <branch> --tags
 git push -u origin master --tags
 
 
+SSH Authentication
+---------------------
 
+It saves some time!
+
+By default the authentication is HTTPS
+
+
+Create an SSH key
+------------------
+
+1. First we need to create a directory .ssh in the user's home dir
+
+$ mkdir ~/.ssh
+
+2. Inside the directory (cd .ssh) generate a key with "ssh-keygen"
+
+$ ssh-keygen -t rsa -C "<email>"
+
+
+* IT IS RECOMMENDED TO ENTER A PASSPHRASE
+
+This command will generate two files id_rsa and id_rsa.pub which are the private and public (respectevely) keys generated.
+
+3. Copy the contents of the public key
+
+4. Go to github and add the key into the "SSH Keys" tab on the settings.
+
+5. Confirm that the machine is able to communicate with github
+
+$ ssh -T git@github.com
