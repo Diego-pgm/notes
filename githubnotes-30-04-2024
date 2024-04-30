@@ -19,3 +19,34 @@ $ git branch -d <branch-name>
 Delete branch reference to origin
 
 $ git fetch -p
+
+
+Creting branches in Github
+----------------------------
+
+If we create a branch on Github amd we do a "git fetch" command, we dont need to specify the -b flag when trying to do a "git checkout" on the new branch created from GitHub
+
+
+Get Git configurations
+-----------------------
+
+$ git config --global -e
+
+
+Delete from local repo a remote branch
+---------------------------------------
+
+$ git push origin :<branch-to-delete>
+
+git push origin :feature/branch-to-delete
+
+Rebase
+-------
+
+Rebase "rewinds" the current commits that are on the branch to a point where the branch you're merging in originally diverged
+
+so if I change something in the repo before doing a "git pull" to safely be ahead of the remote github repo we specify the --rebase flag.
+
+$ git pull --rebase
+
+This will keep the changes that we made and will pull the changes made in Github
