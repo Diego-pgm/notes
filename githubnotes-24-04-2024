@@ -299,3 +299,35 @@ This command will generate two files id_rsa and id_rsa.pub which are the private
 5. Confirm that the machine is able to communicate with github
 
 $ ssh -T git@github.com
+
+
+Fetch / Pull
+---------------
+
+The "git pull" command is doing a fetch and a merge in one command.
+
+$ git pull
+
+but if we did a change in our local environment doing a "merge" will be destructive.
+
+The alternative would be "git fetch"; this option is less destructive.
+
+$ git fetch 
+
+After we make a git fetch we will have a message saying that our branch and the remote branch have diverged, and it suggests to do a "git pull", so we try with a git pull and then the changes from the remote repository will be merged into our local repository.
+
+Still the changes we made locally wont be available in the remote repository, so we need to push our changes. 
+
+
+***** Doing a "fetch" before a "pull" is a good practice!! *****
+
+
+
+Updating Repository and Remote References
+------------------------------------------
+
+Sometimes when we rename a repository on Github, all the local environments that were working with that repository will have a remote reference assigned to an incorrect url since the url of the repo will change from <oldname>.git to <newname>.git.
+
+To set the remote reference we can use this command:
+
+git remote set-url origin <ssh/https url>
