@@ -1,0 +1,21 @@
+Branches on GitHub
+---------------------
+
+Merging locally
+----------------
+
+To merge locally:
+
+(master) $ git merge <branch-to-merge>
+
+and then as the changes are in our local repo and not in GitHub we have to push our changes.
+
+It is a good practice after merging with the master branch to delete the unused branches.
+
+Delete branch from local repo
+
+$ git branch -d <branch-name>
+
+Delete branch reference to origin
+
+$ git fetch -p
