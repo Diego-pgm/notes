@@ -1,0 +1,127 @@
+Terraform
+==============
+
+Terraform allows us to create reusable code that can deploy identical set of infrastucture in a repeatable way.
+
+Terraform has become the most popular and widely used tools to create and manage infrastructure and one of the defacto IAC tools for DevOps
+
+Infrastructure as Code (IaC) is managing and provisioning infrastructure through code instead of a manual process.
+
+
+There are several benefits of designing infra as code:
+
+- Speed of Infrastructure management.
+- Low risk of human error.
+- Version control.
+- Easy collaboration through teams.
+
+
+
+Installation
+--------------
+
+Terraform installation is very simple.
+
+Download the binary file and use it.
+
+
+Understanding the basics
+---------------------------
+
+Before managing environments through Terraform, the first important step is related to Authentication and Authorization
+
+Authentication: Who are you?
+Authorization: What can you do.
+
+Terraform needs access credentials with relevant permissions to create and manage the environments.
+
+For the AWS provider we need to generate a user in the IAM console and then create an access key and secret key
+
+
+First VM with AWS and Terraform
+---------------------------
+
+Some considerations when creating VMs (EC2 instances) are:
+
+1. Select an available region.
+2. Virtual machine Configuration
+ - CPU
+ - Memory
+ - Storage
+ - OS
+3. A user access key and secret key for the provider
+
+We can get the modules and all necessary fields in the Terraform Registry.
+
+Example simple_ec2
+
+provider "aws" {
+  region = "us-east-1"
+  access_key = "<access-key>"
+  secret_key = "<secret-key>"
+}
+
+resource "aws_instance" "testec2instance" {
+  ami = "<select-from-console>"
+  instance_type = "t2.micro"
+}
+
+
+Terraform commands
+---------------------
+
+Download plugins from providers
+
+$ terraform init
+
+Plan before creating new resources
+
+$ terraform plan
+
+Create new resources
+
+$ terraform apply
+
+
+
+Providers
+-------------
+
+Terraform supports multiple providers.
+
+Depending on what type of infra that we want
+
+Some options:
+
+- AWS
+- Azure
+- Google Cloud Platform
+- Kubernetes
+- Oracle Cloud
+- Alibaba Cloud
+- Github
+- Docker
+- etc
+
+A provider is a plugin that lets Terraform manage an external API
+
+When we run terraform init, plugins required for the provider are automatically downloaded and saved locally to a .terraform directory.
+
+
+
+
+Resources
+----------
+
+Resource block describes one or more infrastructure objects.
+
+A Resource Block declares a resource with a user generated name
+
+
+resource "<provider-resource>" "<user-given-name>"{}
+
+
+The resources will only work with its associated provider.
+
+ AWS - aws_instance
+ GCP - googel_workstations_workstation
