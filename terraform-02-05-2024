@@ -1,0 +1,86 @@
+Terraform Destroy
+-------------------
+
+If you keep the infrastructure running, you will get charged for it.
+
+Hence it is important for us to also know on how we can delete the infra resources created via terraform
+
+
+We can destroy all the infra created or we can destroy only one resource using the --target flag.
+
+Commenting a block of code is one way to prevent that terraform creates resources
+
+
+Terraform State File
+---------------------
+
+Terraform stores the state of the infra that is being created from the TF files.
+
+This state allows terraform to map real world resource to the existing configuration.
+
+
+it is a good practice to store a backup of the terraform.tfstate file
+
+
+Desired State
+--------------
+
+Terraform's primary function is to create, modify and destroy infra resources to match the desired state described in a Terraform configuration
+
+
+Current State
+--------------
+
+Current state is the actual state of a resource that is currently deployed
+
+
+Terraform tries to ensure that the deployed infrastructure is based on the desired state.
+
+If there is a difference between the two, terraform plan presents a description of the changes to achieve the desired state
+
+
+
+Dependency Lock File
+----------------------
+
+Terraform dependency lock file allows us to lock to a specific version of the provider.
+
+If a particular provider already has a selection recorded in the lock file, Terraform will always re-select that version for installation, even if a newer version has become available.
+
+Override the behavior by adding the --upgrade flag when running terraform init 
+
+
+
+Authentication better approach
+---------------------------------
+
+1(NOT BEST). The AWS Provider can source credentials and other settings from the shared configuration and credentials files.
+
+provider "aws" {
+  shared_config_files      = ["/Users/tf_user/.aws/config"]
+  shared_credentials_files = ["/Users/tf_user/.aws/credentials"]
+  profile                  = "customprofile"
+}
+
+
+Default Configurations
+------------------------
+
+If shared file lines are not added to provider block, by default, Terraform will locate these files at $HOME/.aws/config and $HOME/.aws/credentials (Linux/MacOS) and "%USERPROFILE%\.aws\config", "%USERPROFILE\.aws\credentials%" on Windows.
+
+
+This path is the path where AWS stores the credentials
+
+
+
+
+
+AWS cli
+---------
+
+The packages and instructions to install them are located in the AWS Documentation
+
+Configurate the credentials with aws
+
+
+$ aws configure
