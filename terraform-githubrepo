@@ -1,0 +1,35 @@
+Generate a token from github
+
+go to Settings > Developer settings > Personal access tokens > New fine-grained personal access tokens
+
+1. Give a name (terraform for example).
+2. (For simplicity) Give access to all the repositories. 
+3. Give the "Administation" rw access
+
+
+terraform code:
+
+terraform {
+  required_providers {
+    github = {
+      source = "integrations/github"
+      version = "~> 5.0"
+    }
+  }
+}
+
+# Configure the Github Provider
+provider "github" {
+  token = "<git-token>"
+}
+
+
+
+Create a new repository with a token
+
+resource "github_repository" "<repo-name>" {
+  name = "<repo-name>"
+  description = "My awesome codebase"
+
+  visibility = "public"
+}
