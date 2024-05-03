@@ -84,3 +84,47 @@ Configurate the credentials with aws
 
 
 $ aws configure
+
+
+
+Cross Referencing Resource Attribute
+----------------------------------------
+
+Terraform allows us to reference the attribute of one resource to be used in a different resource.
+
+Overall syntax:
+
+<RESOURCE TYPE>.<NAME>.<ATTRIBUTE>
+
+
+
+
+String Interpolation
+---------------------
+
+When we need to get the value from another resource yet not created, and also append this value to another string (example: use an ip to append it to a cidr block)
+
+Example
+
+resource "aws_eip" "lb"{
+    domain = "vpc"
+}
+
+resource "aws_security_group" "example" {
+  name = "attribute-sg"
+
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks =  ["${aws_eip.lb.public_ip}/32"]
+  }
+}
+
+
+
+
+Output Values
+----------------
+
+Output values make information about the infra available on the cli, and can expose information for other Terraform configurations to use.
