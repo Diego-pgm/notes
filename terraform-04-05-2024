@@ -1,0 +1,36 @@
+Basic of Variables
+-------------------
+
+Terraform input variables are used to pass certain values from outside of the configuration
+
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+  security_group_id = aws_security_group.allow_tls.id
+  cidr_ipv4         = var.vpn_ip
+  from_port         = var.app_port
+  ip_potocol        = "tcp"
+  to_port           = var.app_port
+}
+
+
+Benefits:
+
+1. Update important values in one central place instead of searching and replacing them throughout the code, saving time and potential mistakes.
+
+2. No need to touch the core Terraform config giles. This can avoid human error.
+
+
+Terraform terraform.tfvars file
+----------------------------------
+
+
+This file will be the first source were terraform will try to take variable values from.
+
+It can be useful in the real world because usually we have different environments (dev/stage/prod) and this will help us to have different values in different environments.
+
+
+The file name for those files will be something like dev.tfvars / stage.tfvars
+
+to run the commands we need to specify the -var-file="/path/to/file.tfvars"
+
+
