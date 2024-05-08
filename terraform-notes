@@ -1,0 +1,80 @@
+08/05/24
+
+Environment variables
+----------------------
+
+If there are no values specified for some variables in the variables.tf file or in a terraform.tfvars file, we can specify the values as environment variables
+
+the naming convention is: TF_VAR_instance_type
+
+
+%IN WINDOWS%
+
+CTRL + R (run tool) and run 'sysdm.cpl' and add the environment variable
+
+$IN LINUX
+
+run the command "export" with the name of the variable and the value of it
+
+$ export TF_VAR_instance_type="t2.small"
+
+
+
+Data Types
+--------------
+
+Data type refers to te type of value.
+
+Restricting Variable Value to Data Type.
+
+Example: Only numbers should be allowed in AWS Usernames
+
+
+variable "username" {
+  type = number
+}
+
+resource "aws_iam_user" "user" {
+  name = var.username
+}
+
+
+this configuration will make the username value to be only numbers.
+
+Data Types in Terraform
+------------------------
+
+string: a sequence of unicode characters representing some text.
+number: a numeric value.
+bool: a boolean value.
+list: a sequence of values.
+set: a collection of unique values.
+map: a group of values identified by name labels {name="name", age="42"}.
+null: a value for absence or omission.
+
+
+
+Fetch Data from Maps and Lists in Variables
+-----------------------------------------------
+
+If we have default values in maps and list we can refer to them as var.varname["key"] for map and var.list[position] (var.type[0])
+
+resource "aws_instance" "myec2" {
+  ami = "ami-"
+  instance_type = var.types["us-east-1"] # For map
+  instance_type = var.list[0] # For list
+}
+
+variable "list" {
+  type = list() # Do list(string) to restrict only string values
+  default = ["m5.large", "m5.xlarge", "t2.medium"]
+}
+
+variable "types" {
+  type = map
+  default = {
+    us-east-1 = "t2.micro"
+    us-west-2 = "t2.nano"
+    ap-south-1 = "t2.small"
+  }
+}
