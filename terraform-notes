@@ -78,3 +78,21 @@ variable "types" {
     ap-south-1 = "t2.small"
   }
 }
+
+
+
+Count Parameter
+-----------------
+
+The count parameter on resources can simplify configurations and let you scale resources by simply incrementing a number.
+
+Let's assume, you need to create two EC2 instances. One of the common approach is to define two separate resource bloscks for aws_instance
+
+
+resource "aws_instance" "instance" {
+  ami = "ami-"
+  instance_type = "t2.micro"
+  count = 5
+}
+
+
