@@ -96,3 +96,19 @@ resource "aws_instance" "instance" {
 }
 
 
+We can set numbered values to multiple resources using the count.index variable
+
+
+We can create a list variable to specify more readable names.
+
+variable "elb_names"{
+  type = list
+  default = ["dev-load", "tst-load", "prod-load"]
+}
+
+resource "aws_iam_user" "lb" {
+  name = var.elb_names[count.index]
+  count = 3
+  path = "/system/"
+}
+
