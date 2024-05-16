@@ -1,0 +1,66 @@
+15/05/2024
+
+Terraform functions
+--------------------
+
+The Terraform language includes a number of built-in functions that you can use to transform and combine values.
+
+The general syntax for function calls is a function name followed by comma-separated arguments in parenthesis:
+
+function(arg1, ag2)
+
+Exmaple:
+
+max(5, 12, 9)
+
+Terraform does not support user-defined functions.
+
+List of available functions
+-------------------------------
+
+- Numeric
+- String
+- Collection
+- Encoding
+- Filesystem
+- Date & Time
+- Hash and Crypto
+- IP Network
+- Type Conversion
+
+
+
+Access the terraform console
+-----------------------------
+
+$ terraform console
+
+
+
+Some functions:
+
+- lookup:  this function will take a map and a string and return the value in the map for the string.
+
+lookup(map, key, defaultvalue)
+lookup({a="ay", b="bee"}, "a"})
+lookup({a="ay"}, b="bee"}, "c", "what?")
+
+
+- element: retrieves a single element from a list
+
+element(list, index)
+element(["a", "b", "c"], 1)
+
+* This can be used with the count.index value if we have multiple resources and the count parameter assigned.
+
+- file: retrieves a file in the path module
+
+file("${path.module}/file.extention")
+
+
+- formatdate: converts a timestamp into a different time format
+
+formatdate(spec, timestamp)
+formatdate("DD MMM YYYY", timestamp())
+
+
