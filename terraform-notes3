@@ -64,3 +64,72 @@ formatdate(spec, timestamp)
 formatdate("DD MMM YYYY", timestamp())
 
 
+
+Introducing Data Sources
+--------------------------
+
+Data sources allow Terraform to use / fetch information defined outside of Terraform
+
+We can fetch information from sources like:
+
+- Digital Ocean Accounts
+- A local file
+- AWS Resources
+
+
+provider aws {
+  region = "us-east-1"
+}
+
+data "aws_instance" "example" {}
+
+
+If we have some resources created (like ec2 instances) we can get information about them like the ips and id's, etc.
+
+They will be stored in the terraform.tfstate file.
+
+
+A data source is accessed via a special kind of resource known as a data resource, declared using a data block.
+
+Following data block request that Terraform read from a given data source ("aws_instance") and export the result under the given local name ("foo")
+
+data "aws_instance" "foo" {}
+
+
+we can also specify filters
+
+
+data "aws_instance" "foo" {
+  filter {
+    name = "tag:Team"
+    values = ["Production"]
+  }
+}
+
+* data "aws_instances" "example" {} will fetch multiple instances
+
+
+
+Fetch latest OS Images Using Data Sources
+------------------------------------------
+
+
+We can get the id of any image in AWS with data sources.
+
+Hardcoding static details in your Terraform code will lead to repeatedly modify your code to meet changing requirements.
+
+We want Terraform to automatically query the latest OS image in AWS or any other provider and use that for creating servers.
+
+
+data "aws_ami" "example" {
+  owners = ["amazon"]
+  most_recent = true
+  
+  filter {
+    name = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-arm64-server-*"]
+    #values = ["ubuntu/images/hvm-ssd/ubuntu-noble-24.04-arm64-server-*"]
+    #values = ["amazon/amzn-ec2-macos-14.4.1-*"]
+    #values = [""]
+  }
+}
