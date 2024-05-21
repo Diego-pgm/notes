@@ -1,0 +1,52 @@
+05/21/2024
+
+Debugging Terraform
+-----------------------
+
+Terraform has detailed logs which can be enabled by setting the TF_LOG environment variable to any value.
+
+You can set TF_LOG to one of the log levels TRACE, DEBUG, INFO, WARN or ERROR to change the verbosity of the logs.
+
+TRACE is the most verbose and is the default if TF_LOG is not set.
+
+To persist logged output you can set TF_LOG_PATH in order to force the log to always be appended to a specific file when logging is enabled.
+
+
+Dynamic Blocs
+----------------
+
+Dynamic Block allows us to dynamically construct repeatable nested blocks which is supported inside resource, data, provider, and provisioner blocks:
+
+dynamic "ingress" {
+  for_each = var.ingress_ports
+  content {
+    from_port = ingress.value
+    to_port = ingress.value
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+Example:
+
+variable "sg_ports" {
+  type = list(number)
+  description = "list of ingress ports"
+  default = [8200, 8201, 8300, 9200, 9500]
+}
+
+resource "aws_security_group" "dynamicsg" {
+  name = "dynamic-sg"
+  description = "Ingress for Vault"
+
+
+  dynamic "ingress" {
+    for_each = var.sg_ports
+    content {
+      from_port = ingress.value
+      to_port = ingress.value
+      protocol = "tcp"
+      cidr_blocks = [0.0.0.0/0]
+    }
+  }
+}
